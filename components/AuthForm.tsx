@@ -4,17 +4,23 @@ import { z } from "zod";
 import Link from "next/link";
 import Image from "next/image";
 import { toast } from "sonner";
+import { auth } from "@/firebase/client";
 import { useForm } from "react-hook-form";
 import { useRouter } from "next/navigation";
 import { zodResolver } from "@hookform/resolvers/zod";
 
+import {
+    createUserWithEmailAndPassword,
+    signInWithEmailAndPassword,
+} from "firebase/auth";
+
 import { Form } from "@/components/ui/form";
 import { Button } from "@/components/ui/button";
+
+import { signIn, signUp } from "@/lib/actions/auth.action";
 import FormField from "./FormField";
 
-
-// A function to generate a dynamic Zod schema based on the form type.
-const authFormSchema = (type: string) => {
+const authFormSchema = (type: FormType) => {
     return z.object({
         name: type === "sign-up" ? z.string().min(3) : z.string().optional(),
         email: z.string().email(),
@@ -22,27 +28,64 @@ const authFormSchema = (type: string) => {
     });
 };
 
-const AuthForm = ({ type }: { type: string }) => {
+const AuthForm = ({ type }: { type: FormType }) => {
     const router = useRouter();
-    const isSignIn = type === "sign-in";
 
-    // Initialize the form schema and hook form instance.
     const formSchema = authFormSchema(type);
     const form = useForm<z.infer<typeof formSchema>>({
         resolver: zodResolver(formSchema),
-        defaultValues: { name: "", email: "", password: "" },
+        defaultValues: {
+            name: "",
+            email: "",
+            password: "",
+        },
     });
 
-    // Handle form submission for both sign-up and sign-in.
     const onSubmit = async (data: z.infer<typeof formSchema>) => {
         try {
             if (type === "sign-up") {
-                // Handle user registration with Firebase and your backend.
+                const { name, email, password } = data;
+
+                const userCredential = await createUserWithEmailAndPassword(
+                    auth,
+                    email,
+                    password
+                );
+
+                const result = await signUp({
+                    uid: userCredential.user.uid,
+                    name: name!,
+                    email,
+                    password,
+                });
+
+                if (!result.success) {
+                    toast.error(result.message);
+                    return;
+                }
 
                 toast.success("Account created successfully. Please sign in.");
                 router.push("/sign-in");
             } else {
-                // Handle user sign-in with Firebase and your backend.
+                const { email, password } = data;
+
+                const userCredential = await signInWithEmailAndPassword(
+                    auth,
+                    email,
+                    password
+                );
+
+                const idToken = await userCredential.user.getIdToken();
+                if (!idToken) {
+                    toast.error("Sign in Failed. Please try again.");
+                    return;
+                }
+
+                await signIn({
+                    email,
+                    idToken,
+                });
+
                 toast.success("Signed in successfully.");
                 router.push("/");
             }
@@ -52,37 +95,61 @@ const AuthForm = ({ type }: { type: string }) => {
         }
     };
 
+    const isSignIn = type === "sign-in";
+
     return (
         <div className="card-border lg:min-w-[566px]">
             <div className="flex flex-col gap-6 card py-14 px-10">
-                {/* Header with logo and application name */}
                 <div className="flex flex-row gap-2 justify-center">
-                    <Image src="/" alt="logo" height={32} width={38} />
+                    <Image src="/logo.svg" alt="logo" height={32} width={38} />
                     <h2 className="text-primary-100">PrepWise</h2>
                 </div>
+
                 <h3>Practice job interviews with AI</h3>
 
-                {/* The main form structure */}
                 <Form {...form}>
-                    <form onSubmit={form.handleSubmit(onSubmit)} className="w-full space-y-6 mt-4 form">
-                        {/* Conditionally render the name field for sign-up */}
+                    <form
+                        onSubmit={form.handleSubmit(onSubmit)}
+                        className="w-full space-y-6 mt-4 form"
+                    >
                         {!isSignIn && (
-                            <FormField control={form.control} name="name" label="Name" placeholder="Your Name" />
+                            <FormField
+                                control={form.control}
+                                name="name"
+                                label="Name"
+                                placeholder="Your Name"
+                                type="text"
+                            />
                         )}
-                        <FormField control={form.control} name="email" label="Email" placeholder="Your email address" type="email" />
-                        <FormField control={form.control} name="password" label="Password" placeholder="Enter your password" type="password" />
 
-                        {/* Dynamic submit button */}
+                        <FormField
+                            control={form.control}
+                            name="email"
+                            label="Email"
+                            placeholder="Your email address"
+                            type="email"
+                        />
+
+                        <FormField
+                            control={form.control}
+                            name="password"
+                            label="Password"
+                            placeholder="Enter your password"
+                            type="password"
+                        />
+
                         <Button className="btn" type="submit">
                             {isSignIn ? "Sign In" : "Create an Account"}
                         </Button>
                     </form>
                 </Form>
 
-                {/* Dynamic link to switch between sign-in and sign-up */}
                 <p className="text-center">
                     {isSignIn ? "No account yet?" : "Have an account already?"}
-                    <Link href={!isSignIn ? "/sign-in" : "/sign-up"} className="font-bold text-user-primary ml-1">
+                    <Link
+                        href={!isSignIn ? "/sign-in" : "/sign-up"}
+                        className="font-bold text-user-primary ml-1"
+                    >
                         {!isSignIn ? "Sign In" : "Sign Up"}
                     </Link>
                 </p>
