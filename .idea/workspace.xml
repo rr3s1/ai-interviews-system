@@ -4,13 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="e37cbdfa-cf7b-4051-99f6-0af4fb39f8d9" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/app/(root)/interview/[id]/page.tsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/lib/actions/general.action.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/(root)/page.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/app/(root)/page.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/actions/auth.action.ts" beforeDir="false" afterPath="$PROJECT_DIR$/lib/actions/auth.action.ts" afterDir="false" />
-    </list>
+    <list default="true" id="e37cbdfa-cf7b-4051-99f6-0af4fb39f8d9" name="Changes" comment="" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -40,15 +34,21 @@
     &quot;js.debugger.nextJs.config.created.client&quot;: &quot;true&quot;,
     &quot;js.debugger.nextJs.config.created.server&quot;: &quot;true&quot;,
     &quot;junie.onboarding.icon.badge.shown&quot;: &quot;true&quot;,
+    &quot;last_opened_file_path&quot;: &quot;C:/000 AppsProjs/010   ai_sw_dev_interview/ai-mock-interviews-craft&quot;,
     &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
     &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
     &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
     &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
     &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
-    &quot;ts.external.directory.path&quot;: &quot;C:\\000 AppsProjs\\010   ai_sw_dev_interview\\ai-mock-interviews-main\\node_modules\\typescript\\lib&quot;,
+    &quot;ts.external.directory.path&quot;: &quot;C:\\000 AppsProjs\\010   ai_sw_dev_interview\\ai-mock-interviews-craft\\node_modules\\typescript\\lib&quot;,
     &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   }
 }</component>
+  <component name="RecentsManager">
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\000 AppsProjs\010   ai_sw_dev_interview\ai-mock-interviews-craft\app\(root)\interview\[id]" />
+    </key>
+  </component>
   <component name="RunManager" selected="npm.Next.js: server-side">
     <configuration name="Next.js: debug client-side" type="JavascriptDebugType" uri="http://localhost:3000/">
       <method v="2" />
@@ -81,7 +81,10 @@
       <workItem from="1751458746040" duration="9335000" />
       <workItem from="1751478342030" duration="80000" />
       <workItem from="1751478643439" duration="1843000" />
-      <workItem from="1751531830440" duration="12188000" />
+      <workItem from="1751531830440" duration="12485000" />
+      <workItem from="1751613313697" duration="22000" />
+      <workItem from="1751613785468" duration="461000" />
+      <workItem from="1751614258680" duration="3549000" />
     </task>
     <servers />
   </component>
