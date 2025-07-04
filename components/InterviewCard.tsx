@@ -1,40 +1,57 @@
 import dayjs from "dayjs";
 import Link from "next/link";
 import Image from "next/image";
-import { getRandomInterviewCover } from "@/lib/utils";
-import {Button} from "@/components/ui/button";
-import DisplayTechIcons from "@/components/DisplayTechIcons";
 
-// The InterviewCard component receives interview data as props.
+import { Button } from "./ui/button";
+import DisplayTechIcons from "./DisplayTechIcons";
+
+import { cn, getRandomInterviewCover } from "@/lib/utils";
+import { getFeedbackByInterviewId } from "@/lib/actions/general.action";
+
 const InterviewCard = async ({
-                                 id,
+                                 interviewId,
                                  userId,
                                  role,
                                  type,
                                  techstack,
                                  createdAt,
-                             }: Interview) => {
-    // For now, feedback is mocked as null.
-    const feedback = null as Feedback | null ;
+                             }: InterviewCardProps) => {
+    const feedback =
+        userId && interviewId
+            ? await getFeedbackByInterviewId({
+                interviewId,
+                userId,
+            })
+            : null;
 
-    // Normalize the interview type for display consistency.
     const normalizedType = /mix/gi.test(type) ? "Mixed" : type;
 
-    // Format the creation date into a readable string using dayjs.
+    const badgeColor =
+        {
+            Behavioral: "bg-light-400",
+            Mixed: "bg-light-600",
+            Technical: "bg-light-800",
+        }[normalizedType] || "bg-light-600";
+
     const formattedDate = dayjs(
         feedback?.createdAt || createdAt || Date.now()
     ).format("MMM D, YYYY");
 
     return (
-        <article className="card-border w-[360px] max-sm:w-full min-h-96">
+        <div className="card-border w-[360px] max-sm:w-full min-h-96">
             <div className="card-interview">
                 <div>
-                    {/* The badge is absolutely positioned at the top-right corner. */}
-                    <div className="absolute top-0 right-0 w-fit px-4 py-2 rounded-bl-lg bg-light-600">
-                        <p className="badge-text">{normalizedType}</p>
+                    {/* Type Badge */}
+                    <div
+                        className={cn(
+                            "absolute top-0 right-0 w-fit px-4 py-2 rounded-bl-lg",
+                            badgeColor
+                        )}
+                    >
+                        <p className="badge-text ">{normalizedType}</p>
                     </div>
 
-                    {/* The cover image is fetched randomly from a predefined list. */}
+                    {/* Cover Image */}
                     <Image
                         src={getRandomInterviewCover()}
                         alt="cover-image"
@@ -78,20 +95,16 @@ const InterviewCard = async ({
                         <Link
                             href={
                                 feedback
-                                    ? `/interview/${id}/feedback`
-                                    : `/interview/${id}`
+                                    ? `/interview/${interviewId}/feedback`
+                                    : `/interview/${interviewId}`
                             }
                         >
                             {feedback ? "Check Feedback" : "View Interview"}
                         </Link>
                     </Button>
                 </div>
-
-
-                </div>
-                {/* Additional card content for role, date, and tech stack would go here. */}
-
-        </article>
+            </div>
+        </div>
     );
 };
 
