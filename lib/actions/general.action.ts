@@ -1,10 +1,13 @@
-import { db } from "@/firebase/admin";
+"use server";
+
+import { getAdminDb } from "@/firebase/admin";
 import { generateObject } from "ai";
 import { google } from "@ai-sdk/google";
 import { feedbackSchema } from "@/constants";
 
 // Fetches all interviews for a specific user, ordered by creation date.
 export async function getInterviewByUserId(userId: string): Promise<Interview[] | null> {
+    const db = await getAdminDb();
     const interviews = await db
         .collection("interviews")
         .where("userId", "==", userId)
@@ -23,6 +26,7 @@ export async function getLatestInterviews(
 ): Promise<Interview[] | null> {
     const { userId, limit = 20 } = params;
 
+    const db = await getAdminDb();
     const interviews = await db
         .collection("interviews")
         .orderBy("createdAt", "desc")
@@ -39,6 +43,7 @@ export async function getLatestInterviews(
 
 // Fetches a single interview by its document ID.
 export async function getInterviewById(id: string): Promise<Interview | null> {
+    const db = await getAdminDb();
     const interview = await db.collection("interviews").doc(id).get();
     return interview.data() as Interview | null;
 }
@@ -93,6 +98,7 @@ export async function createFeedback(params: CreateFeedbackParams) {
         let feedbackRef;
 
         // Uses an existing document ID if provided, otherwise creates a new one.
+        const db = await getAdminDb();
         if (feedbackId) {
             feedbackRef = db.collection("feedback").doc(feedbackId);
         } else {
@@ -117,6 +123,7 @@ export async function getFeedbackByInterviewId(
     const { interviewId, userId } = params;
 
     // Queries the database for a feedback document matching the interview and user IDs.
+    const db = await getAdminDb();
     const querySnapshot = await db
         .collection("feedback")
         .where("interviewId", "==", interviewId)

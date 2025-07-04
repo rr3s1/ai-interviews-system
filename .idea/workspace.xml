@@ -4,9 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="e37cbdfa-cf7b-4051-99f6-0af4fb39f8d9" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-    </list>
+    <list default="true" id="e37cbdfa-cf7b-4051-99f6-0af4fb39f8d9" name="Changes" comment="" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -42,7 +40,7 @@
     "node.js.selected.package.eslint": "(autodetect)",
     "node.js.selected.package.tslint": "(autodetect)",
     "nodejs_package_manager_path": "npm",
-    "ts.external.directory.path": "C:\\000 AppsProjs\\010   ai_sw_dev_interview\\ai-mock-interviews-main\\node_modules\\typescript\\lib",
+    "ts.external.directory.path": "C:\\000 AppsProjs\\010   ai_sw_dev_interview\\ai-mock-interviews-craft\\node_modules\\typescript\\lib",
     "vue.rearranger.settings.migration": "true"
   }
 }]]></component>
@@ -86,7 +84,7 @@
       <workItem from="1751531830440" duration="12485000" />
       <workItem from="1751613313697" duration="22000" />
       <workItem from="1751613785468" duration="461000" />
-      <workItem from="1751614258680" duration="5411000" />
+      <workItem from="1751614258680" duration="6168000" />
     </task>
     <servers />
   </component>

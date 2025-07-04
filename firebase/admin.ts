@@ -1,3 +1,5 @@
+"use server";
+
 import { initializeApp, getApps, cert } from "firebase-admin/app";
 import { getAuth } from "firebase-admin/auth";
 import { getFirestore } from "firebase-admin/firestore";
@@ -23,4 +25,14 @@ function initFirebaseAdmin() {
     };
 }
 
-export const { auth, db } = initFirebaseAdmin();
+// Cache the initialized Firebase Admin instance
+const adminInstance = initFirebaseAdmin();
+
+// Export async functions to get auth and db
+export async function getAdminAuth() {
+    return adminInstance.auth;
+}
+
+export async function getAdminDb() {
+    return adminInstance.db;
+}
