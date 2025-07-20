@@ -13,6 +13,10 @@
   </div>
 
   <h3 align="center">Prepwise: A job interview preparation platform powered by Vapi AI Voice agents</h3>
+<img width="1360" height="1036" alt="image" src="https://github.com/user-attachments/assets/228f99b5-a82d-461e-ba54-c36478de2c2e" />
+<br>
+<img width="1446" height="811" alt="image" src="https://github.com/user-attachments/assets/6a63cc42-e334-411c-9f16-a97ddadd4ad0" />
+
 
    
 </div>
